@@ -1,15 +1,15 @@
 import Layout from '../layout/Layout'
 import { FaPlus } from "react-icons/fa";
-
+ 
 const Navbar = () => {
   return (
-    <div className='bg-base-200'>
+    <div className='bg-base-200 sticky top-0 z-10'>
     <Layout>
     <div>
       <div className="navbar  shadow-sm">
   
   <div className="navbar-start">
-    <a className="btn btn-ghost text-xl">daisyUI</a>
+    <a className="btn btn-ghost text-xl">Employess</a>
   </div>
   <div className="navbar-end">
     <button className="btn btn-ghost btn-circle">
