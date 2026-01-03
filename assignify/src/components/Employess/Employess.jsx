@@ -4,6 +4,7 @@ import { FaRegEdit } from "react-icons/fa";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { useDispatch, useSelector } from 'react-redux';
 import { openDeletePopup, openEmployeePopup } from '../../store/features/popup/popup.slice';
+import { updateEmployees } from '../../store/features/employee/employee.thunk';
 
 
 const Employess = () => {
@@ -24,7 +25,7 @@ const Employess = () => {
     </div>
     </Layout>
   )
-}
+}  
 
 const EmployeeCard=({details})=>{
 
@@ -39,18 +40,22 @@ const EmployeeCard=({details})=>{
     <p className="list-col-wrap text-xs">
       {details.bio}
     </p>
-    <button onClick={()=>dispatch(openEmployeePopup())}className="btn btn-square btn-ghost">
+    <button onClick={()=>dispatch(openEmployeePopup(details))}className="btn btn-square btn-ghost">
       <FaRegEdit className='text-xl'/>
     </button>
-     <button  onClick={()=>dispatch(openDeletePopup())}
+     <button  onClick={()=>dispatch(openDeletePopup(details.id))}
       className="btn btn-square btn-ghost">
       <MdOutlineDeleteOutline className='text-xl'/>
     </button>
-    <button className="btn btn-square btn-ghost">
+    <button onClick={()=>dispatch(updateEmployees)} className="btn btn-square btn-ghost">
       <svg className="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g strokeLinejoin="round" strokeLinecap="round" strokeWidth="2" fill="none" stroke="currentColor"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></g></svg>
     </button>
   </li>
-  )
+ )
 }
 
 export default Employess
+
+
+
+

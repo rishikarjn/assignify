@@ -1,10 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { closeEmployeePopup } from '../../store/features/popup/popup.slice';
-import { postEmployees } from '../../store/features/employee/employee.thunk';
+import { postEmployees, updateEmployees } from '../../store/features/employee/employee.thunk';
 
 const EmployeePopup = () => {
-    
     const [formDetails, setFormDetails] =useState({
       profileUrl:'',
       name:'',
@@ -25,10 +24,38 @@ const EmployeePopup = () => {
     }
 
     const handleSubmit=async ()=>{
-      await dispatch(postEmployees(formDetails))
+       if(popup.id){
+        await dispatch(updateEmployees({
+          id:popup.id,
+          details: formDetails
+        }))
+       }else{
+           await dispatch(postEmployees(formDetails))
+       }
+     
       dispatch(closeEmployeePopup())
     }
-    
+
+    useEffect(()=>{
+      if(!popup){
+        setFormDetails({
+      profileUrl:'',
+      name:'',
+      email:'',
+      bio:'',
+      highlight:false
+        })
+      }else if(popup.id){
+        setFormDetails({
+      profileUrl:popup.profileUrl,
+      name:popup.name,
+      email:popup.email,
+      bio:popup.bio,
+      highlight:false
+        })
+      }
+    },[popup])
+
     if(!popup) return null;
     
   return (
@@ -40,16 +67,16 @@ const EmployeePopup = () => {
   <legend className="fieldset-legend">Employee Details</legend>
 
   <label className="label">Profile Url</label>
-  <input name='profileUrl' onChange={handleInputChange} type="text" className="input" placeholder="Profile Url" />
+  <input name='profileUrl' value={formDetails.profileUrl} onChange={handleInputChange} type="text" className="input" placeholder="Profile Url" />
 
   <label className="label">Name</label>
-  <input name='name' onChange={handleInputChange} type="text" className="input" placeholder="Name" />
+  <input name='name' value={formDetails.name} onChange={handleInputChange} type="text" className="input" placeholder="Name" />
   
   <label className="label">Email</label>
-  <input name='email' onChange={handleInputChange} type="email" className="input" placeholder="Email" />
+  <input name='email' value={formDetails.email} onChange={handleInputChange} type="email" className="input" placeholder="Email" />
 
   <label className='label'>Bio</label> 
-  <textarea name='bio' onChange={handleInputChange} className='textarea h-24'
+  <textarea name='bio' value={formDetails.bio} onChange={handleInputChange} className='textarea h-24'
   placeholder='Bio'></textarea>
 
   <button onClick={handleSubmit} className="btn btn-neutral mt-4">Submit</button>
