@@ -39,14 +39,14 @@ const EmployeePopup = () => {
     useEffect(()=>{
       if(!popup){
         setFormDetails({
-      profileUrl:'',
-      name:'',
-      email:'',
-      bio:'',
-      highlight:false
+           profileUrl:'',
+           name:'',
+           email:'',
+           bio:'',
+           highlight:false
         })
       }else if(popup.id){
-        setFormDetails({
+      setFormDetails({
       profileUrl:popup.profileUrl,
       name:popup.name,
       email:popup.email,
